@@ -90,16 +90,17 @@
   ul.sprig li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:50% 0 50% 0;background:var(--coral);transform:rotate(45deg);}
   .panel.sage ul.sprig li::before{background:var(--sage);}
 
-  /* activities — illustrated hand-drawn menu, no cards */
-  .menu{position:relative;margin-top:4px;}
-  .branch{display:block;width:260px;height:26px;margin:0 auto 16px;color:var(--sage);}
-  .menu-list{display:grid;grid-template-columns:1fr 1fr;column-gap:54px;row-gap:2px;max-width:700px;margin:0 auto;}
-  .mitem{display:flex;align-items:center;gap:15px;padding:9px 4px;}
-  .mitem svg.doodle{width:34px;height:34px;flex:none;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
-  .mitem.m1{color:var(--coral);} .mitem.m2{color:var(--sage);} .mitem.m3{color:#c79235;} .mitem.m4{color:var(--terra);}
-  .mitem .nm{font-family:'Baar',serif;font-size:20px;line-height:1.12;color:var(--ink);}
-  .act-note{font-size:13.5px;color:var(--ink-soft);margin:16px 0 0;text-align:center;font-style:italic;}
-  .flourish{display:block;width:70px;height:30px;margin:8px auto 0;color:var(--coral);opacity:.85;}
+  /* activities — photographic menu band, names in serif, no icons */
+  .menu{position:relative;margin-top:4px;border-radius:24px;overflow:hidden;box-shadow:0 5px 18px rgba(67,56,44,.2);}
+  .menu .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .menu::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg,rgba(67,56,44,.84) 0%,rgba(67,56,44,.6) 55%,rgba(201,124,93,.6) 100%);}
+  .menu .inner{position:relative;z-index:2;padding:24px 36px 22px;}
+  .menu .names{display:grid;grid-template-columns:1fr 1fr;column-gap:54px;max-width:660px;margin:0 auto;}
+  .menu .it{font-family:'Baar',serif;font-size:21px;color:#fff;padding:11px 2px;
+    border-bottom:1px solid rgba(255,255,255,.22);}
+  .menu .names .it:nth-last-child(-n+2){border-bottom:none;}
+  .menu .note{color:#f5ecdd;font-style:italic;text-align:center;font-size:13.5px;margin:18px 0 0;}
 
   /* why band */
   .why{display:flex;gap:24px;}
@@ -200,32 +201,20 @@
     <!-- ACTIVITIES -->
     <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v16M4 12h16M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>What's on the menu</h2>
     <div class="menu">
-      <!-- hand-drawn leafy branch divider -->
-      <svg class="branch" viewBox="0 0 260 26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 13c40-2 80-2 122 0 42 2 82 2 122 0"/>
-        <path d="M70 13c-3-6-9-8-14-7 1 6 8 9 14 7zM110 13c3-6 9-8 14-7-1 6-8 9-14 7zM150 13c-3-6-9-8-14-7 1 6 8 9 14 7zM190 13c3-6 9-8 14-7-1 6-8 9-14 7z"/>
-        <circle cx="130" cy="13" r="3.2"/><path d="M130 6v-3M130 23v-3"/>
-      </svg>
-
-      <div class="menu-list">
-        <div class="mitem m1"><svg class="doodle" viewBox="0 0 26 26"><path d="M5 7c2-1.5 5-1.5 8 0 3-1.5 6-1.5 8 0v10c0 2-2 3-4 3-1.5 0-2.5-.6-4-1.6"/><path d="M13 7v13"/><path d="M9 20c-1.5 0-3-1-3-2.5"/></svg><div class="nm">Theatre &amp;<br>Performance</div></div>
-        <div class="mitem m2"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 3l1.6 4.2 4.4.2-3.5 2.7 1.3 4.3L13 12l-3.8 2.6 1.3-4.3L7 7.4l4.4-.2z"/><path d="M13 15v8M9 23h8"/></svg><div class="nm">Circus Skills</div></div>
-        <div class="mitem m3"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 4c-2.5 4-2.5 12 0 18M13 4c2.5 4 2.5 12 0 18M6 22h14M9.5 10C7 10 6 8.7 6 6.5M16.5 10c2.5 0 3.5-1.3 3.5-3.5"/></svg><div class="nm">Bushcraft &amp;<br>Survival</div></div>
-        <div class="mitem m4"><svg class="doodle" viewBox="0 0 26 26"><circle cx="18" cy="6.5" r="2.6"/><path d="M4 22c3.5-1 6-3.5 7.5-7M4 22l6.5-1.2M4 22l1.2-6.5M11.5 15l4 5"/></svg><div class="nm">Outdoor<br>Adventures</div></div>
-        <div class="mitem m1"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 4a9 9 0 1 0 0 18c1.3 0 1.8-1.1 1.1-2-.7-1.1.1-2.5 1.5-2.5H18a3.2 3.2 0 0 0 3.2-3.2C21.2 9.3 17.4 4 13 4z"/><circle cx="9" cy="12" r="1.1"/><circle cx="13" cy="9" r="1.1"/><circle cx="17" cy="12" r="1.1"/></svg><div class="nm">Arts &amp; Crafts</div></div>
-        <div class="mitem m2"><svg class="doodle" viewBox="0 0 26 26"><path d="M10 19V6l10-2.2V15"/><circle cx="7" cy="19" r="2.8"/><circle cx="17" cy="15" r="2.8"/></svg><div class="nm">Design &amp; Music</div></div>
-        <div class="mitem m3"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 9c-1.2-3-5.5-3.4-7.2-.6C4.3 11 6.5 14.4 13 19.5c6.5-5.1 8.7-8.5 7.2-11.1C18.5 5.6 14.2 6 13 9z"/></svg><div class="nm">Games &amp; Food</div></div>
-        <div class="mitem m4"><svg class="doodle" viewBox="0 0 26 26"><circle cx="9" cy="8.5" r="2.8"/><circle cx="17" cy="8.5" r="2.8"/><path d="M4 21c0-3.3 2.2-5.5 5-5.5s5 2.2 5 5.5M12 21c0-3.3 2.2-5.5 5-5.5s5 2.2 5 5.5"/></svg><div class="nm">Social &amp; Play</div></div>
+      <img class="bg" src="assets/photos/menu-bg.jpg" alt="Children making and creating at Ringwood Waldorf School">
+      <div class="inner">
+        <div class="names">
+          <div class="it">Theatre &amp; Performance</div>
+          <div class="it">Circus Skills</div>
+          <div class="it">Bushcraft &amp; Survival</div>
+          <div class="it">Outdoor Adventures</div>
+          <div class="it">Arts &amp; Crafts</div>
+          <div class="it">Design &amp; Music</div>
+          <div class="it">Games &amp; Food</div>
+          <div class="it">Social &amp; Play</div>
+        </div>
+        <p class="note">Plus quieter alternatives every day for children who prefer a gentler pace — there's room for everyone.</p>
       </div>
-
-      <p class="act-note">Plus quieter alternatives every day for children who prefer a gentler pace — there's room for everyone.</p>
-
-      <!-- small flower flourish -->
-      <svg class="flourish" viewBox="0 0 70 30" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="35" cy="12" r="3"/>
-        <path d="M35 9c-2-3 0-6 0-6s2 3 0 6zM38 12c3-2 6 0 6 0s-3 2-6 0zM32 12c-3-2-6 0-6 0s3 2 6 0zM35 15c-2 3 0 6 0 6s2-3 0-6z"/>
-        <path d="M35 18c-4 4-12 5-12 5M35 18c4 4 12 5 12 5"/>
-      </svg>
     </div>
     <p class="act-note">Plus quieter alternatives every day for children who prefer a gentler pace — there's room for everyone.</p>
 
