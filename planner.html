@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Club 2026 — Activity &amp; Staff Planner</title>
+<style>
+  @font-face{font-family:'Baar';src:url('assets/baar.woff2') format('woff2'),url('assets/baar.ttf') format('truetype');font-display:swap;}
+  :root{
+    --paper:#f7f1e6;--paper2:#fbf7ef;--ink:#43382c;--ink-soft:#6b5d4d;
+    --coral:#ec7575;--coral-soft:#fbe4e1;--sage:#8a9a78;--sage-soft:#e8ecdf;
+    --gold:#e0aa53;--gold-soft:#f6e6c8;--terra:#c97c5d;--line:#e5dcc9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Source Sans 3","Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:#ddd6c6;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  h1,h2,h3,.serif{font-family:'Baar',Georgia,serif;font-weight:400;}
+  .wrap{max-width:1180px;margin:0 auto;padding:18px;}
+
+  /* masthead */
+  header{position:relative;border-radius:18px 18px 0 0;overflow:hidden;height:150px;}
+  header img.ph{width:100%;height:100%;object-fit:cover;}
+  header::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(67,56,44,.74) 0%,rgba(67,56,44,.45) 55%,rgba(236,117,117,.45) 100%);}
+  header .inner{position:absolute;inset:0;padding:20px 28px;z-index:2;color:#fff;display:flex;flex-direction:column;justify-content:space-between;}
+  header .logo{height:54px;width:auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5));}
+  header h1{margin:0;font-size:28px;}
+  header h1 .light{color:var(--coral-soft);}
+  header p{margin:3px 0 0;color:#f0e7d8;font-size:13px;max-width:680px;}
+
+  /* toolbar */
+  .toolbar{background:var(--paper2);border:1px solid var(--line);border-top:none;padding:12px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .legend{display:flex;gap:18px;font-size:13px;align-items:center;}
+  .swatch{display:inline-block;width:15px;height:15px;border-radius:5px;vertical-align:-2px;margin-right:6px;}
+  .sw-tbc{background:var(--gold-soft);border:1px dashed var(--gold);}
+  .sw-ok{background:var(--sage-soft);border:1px solid var(--sage);}
+  .spacer{flex:1;}
+  button{font:inherit;font-size:13px;border:none;border-radius:24px;padding:9px 20px;cursor:pointer;font-family:'Baar',serif;}
+  .btn-print{background:var(--sage);color:#fff;}
+  .btn-clear{background:var(--paper);color:var(--terra);border:1px solid #e0c3b4;}
+  .saved{font-size:12.5px;color:var(--sage);font-weight:700;min-width:80px;font-family:'Baar',serif;}
+
+  /* weeks */
+  .week{background:var(--paper);border:1px solid var(--line);border-top:none;}
+  .week-head{padding:11px 28px;font-family:'Baar',serif;font-size:18px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .week:nth-of-type(1) .week-head{background:var(--coral);}
+  .week:nth-of-type(2) .week-head{background:var(--sage);}
+  .week:nth-of-type(3) .week-head{background:var(--gold);}
+  .week-head .age{font-size:13px;opacity:.95;}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);}
+  .day{border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:172px;display:flex;flex-direction:column;background:var(--paper2);}
+  .day:last-child{border-right:none;}
+  .day-top{padding:7px 12px;font-family:'Baar',serif;font-size:14px;color:var(--ink);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;background:var(--paper);}
+  .day-date{font-family:"Source Sans 3",sans-serif;font-size:11px;color:var(--ink-soft);}
+  .slot{padding:7px 11px;border-bottom:1px dashed var(--line);flex:1;}
+  .slot:last-child{border-bottom:none;}
+  .slot .lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700;margin-bottom:3px;}
+  .field{font-size:12.5px;min-height:20px;outline:none;border-radius:8px;padding:4px 7px;
+    background:var(--gold-soft);border:1px dashed var(--gold);transition:.15s;}
+  .field:focus{box-shadow:0 0 0 2px rgba(138,154,120,.4);background:#fff;}
+  .field.filled{background:var(--sage-soft);border:1px solid var(--sage);}
+  .field[data-empty]:empty::before{content:attr(data-empty);color:#b89640;font-style:italic;}
+
+  .footnote{background:var(--paper2);border:1px solid var(--line);border-top:none;border-radius:0 0 18px 18px;padding:15px 28px;font-size:12.5px;color:var(--ink-soft);}
+  .footnote b,.footnote .serif{color:var(--ink);}
+
+  /* staff roster */
+  .staff-band{background:var(--paper);border:1px solid var(--line);border-top:none;padding:4px 28px 20px;}
+  .staff-band h2{font-family:'Baar',serif;font-size:22px;color:var(--coral);margin:16px 0 3px;}
+  .staff-band .hint{font-size:12.5px;color:var(--ink-soft);margin:0 0 12px;}
+  table.staff{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper2);}
+  table.staff th{background:var(--sage);color:#fff;font-family:'Baar',serif;font-weight:400;font-size:13.5px;text-align:left;padding:9px 12px;}
+  table.staff td{border-top:1px solid var(--line);vertical-align:top;padding:3px 6px;}
+  table.staff tr:nth-child(even) td{background:var(--paper);}
+  .cell{min-height:21px;outline:none;border-radius:7px;padding:4px 8px;font-size:12.5px;color:var(--ink);transition:.12s;}
+  .cell:focus{box-shadow:0 0 0 2px rgba(138,154,120,.4);background:#fff;}
+  td.c-name .cell{font-family:'Baar',serif;font-size:14.5px;}
+  .cell[data-empty]:empty::before{content:"—";color:#c9bda8;}
+  .addrow{margin-top:12px;background:var(--coral);color:#fff;border:none;border-radius:24px;padding:9px 20px;font-family:'Baar',serif;font-size:13.5px;cursor:pointer;}
+
+  @media print{
+    .addrow{display:none;}
+    body{background:#fff;}
+    .wrap{max-width:none;padding:0;}
+    .toolbar{display:none;}
+    header,.week,.footnote{border-radius:0;}
+    .field{background:#fff !important;border:1px solid #ccc !important;}
+    .field.filled{background:#fff !important;}
+    .field[data-empty]:empty::before{content:"—";color:#bbb;}
+    @page{size:A4 landscape;margin:8mm;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img class="ph" src="assets/photos/handwork.jpg" alt="">
+    <div class="inner">
+      <img class="logo" src="assets/rws-logo.svg" alt="Ringwood Waldorf School">
+      <div>
+        <h1>Summer Holiday Club 2026 — Activity &amp; Staff <span class="light">Planner</span></h1>
+        <p><b>Draft for review.</b> Activities and leads are still being confirmed — please have a look and let Lisa know what else you'd want to see here. Leads are shown by initials; full names &amp; contacts are held separately. (Any edits you make here stay on your own device.)</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="legend">
+      <span><span class="swatch sw-tbc"></span>To be confirmed</span>
+      <span><span class="swatch sw-ok"></span>Confirmed</span>
+    </div>
+    <span class="spacer"></span>
+    <span class="saved" id="saved"></span>
+    <button class="btn-print" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn-clear" onclick="clearAll()">Clear all</button>
+  </div>
+
+  <div id="weeks"></div>
+
+  <div class="staff-band">
+    <h2>Staff &amp; helpers</h2>
+    <p class="hint">Who's offered to help so far, shown by initials. Full names and contact details are held separately by Lisa. As people firm up their days, they'll be assigned into the day grid above.</p>
+    <table class="staff">
+      <thead><tr><th>Initials</th><th>Week(s) &amp; days</th><th>KG / Lower School</th><th>Paid / Voluntary</th><th>Notes &amp; follow-ups</th></tr></thead>
+      <tbody id="staffBody"></tbody>
+    </table>
+    <button class="addrow" onclick="addStaff()">+ Add helper</button>
+  </div>
+
+  <div class="footnote">
+    <span class="serif">How to use:</span> click any gold box and type the activity or staff name — it turns green and saves instantly.
+    Leave a box blank to keep it flagged as still-to-confirm. &nbsp;•&nbsp;
+    <b>Week 1</b> ages 4–12 (incl. Kindergarten mornings) &nbsp;•&nbsp; <b>Weeks 2 &amp; 3</b> ages 6–12.
+    &nbsp;•&nbsp; Send me your confirmed days any time and I'll fold them into the public programme too.
+  </div>
+
+</div>
+
+<script>
+  var WEEKS = [
+    {name:"Week 1 · 27–31 July", age:"Ages 4–12", dates:["27 Jul","28 Jul","29 Jul","30 Jul","31 Jul"]},
+    {name:"Week 2 · 3–7 August", age:"Ages 6–12", dates:["3 Aug","4 Aug","5 Aug","6 Aug","7 Aug"]},
+    {name:"Week 3 · 10–14 August", age:"Ages 6–12", dates:["10 Aug","11 Aug","12 Aug","13 Aug","14 Aug"]}
+  ];
+  var DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+  var SLOTS = [
+    {key:"am",   lbl:"Morning activity",   ph:"e.g. Bushcraft"},
+    {key:"pm",   lbl:"Afternoon activity", ph:"e.g. Circus skills"},
+    {key:"staff",lbl:"Lead (initials)",    ph:"e.g. KR"}
+  ];
+  function id(w,d,s){return "w"+w+"d"+d+"_"+s;}
+  var store;
+  try{ store = JSON.parse(localStorage.getItem("rws_planner_2026")||"{}"); }catch(e){ store={}; }
+  function escapeHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  var html="";
+  WEEKS.forEach(function(wk,wi){
+    html+='<div class="week"><div class="week-head"><span>'+wk.name+'</span><span class="age">'+wk.age+'</span></div><div class="grid">';
+    DAYS.forEach(function(day,di){
+      html+='<div class="day"><div class="day-top"><span>'+day+'</span><span class="day-date">'+wk.dates[di]+'</span></div>';
+      SLOTS.forEach(function(sl){
+        var k=id(wi,di,sl.key); var val=store[k]||"";
+        html+='<div class="slot"><div class="lbl">'+sl.lbl+'</div>'+
+              '<div class="field'+(val?' filled':'')+'" contenteditable="true" data-key="'+k+'" data-empty="'+sl.ph+'">'+escapeHtml(val)+'</div></div>';
+      });
+      html+='</div>';
+    });
+    html+='</div></div>';
+  });
+  document.getElementById("weeks").innerHTML=html;
+
+  var savedEl=document.getElementById("saved"), t;
+  document.addEventListener("input", function(e){
+    var f=e.target;
+    if(!f.classList || !f.classList.contains("field")) return;
+    var txt=f.innerText.trim();
+    if(txt){ store[f.dataset.key]=txt; f.classList.add("filled"); }
+    else { delete store[f.dataset.key]; f.classList.remove("filled"); }
+    localStorage.setItem("rws_planner_2026", JSON.stringify(store));
+    savedEl.textContent="✓ Saved";
+    clearTimeout(t); t=setTimeout(function(){savedEl.textContent="";},1200);
+  });
+  function clearAll(){
+    if(!confirm("Clear every activity entry in the day grid? (Staff list is not affected.) This cannot be undone.")) return;
+    store={}; localStorage.removeItem("rws_planner_2026");
+    document.querySelectorAll(".field").forEach(function(f){f.innerText="";f.classList.remove("filled");});
+  }
+
+  /* ---------- Staff & helpers roster ---------- */
+  var STAFF_COLS=["name","weeks","group","pay","notes"];
+  var STAFF_DEFAULT=[
+    {name:"F",        weeks:"Week 1",                                group:"KG",                           pay:"",                               notes:""},
+    {name:"M",        weeks:"Week 1",                                group:"Lower School",                 pay:"",                               notes:""},
+    {name:"KR",       weeks:"Thu 30 & Fri 31 Jul · Mon 3–Thu 6 Aug", group:"KG (Wk 1) & Lower School",     pay:"TBC",                            notes:"Bringing child"},
+    {name:"PB",       weeks:"Week 1",                                group:"Lower School",                 pay:"Voluntary (if child can attend)",notes:"How many days/hours? All week?"},
+    {name:"G",        weeks:"Weeks 1, 2 & 3",                        group:"Lower School",                 pay:"Voluntary",                      notes:""},
+    {name:"LauC",     weeks:"Week 2 (from 12:00)",                   group:"Lower School",                 pay:"Voluntary",                      notes:"Will plug gaps"},
+    {name:"LucC",     weeks:"Week 2",                                group:"Lower School",                 pay:"Voluntary",                      notes:"Will plug gaps"},
+    {name:"AN",       weeks:"TBC",                                   group:"",                             pay:"Paid",                           notes:"Needs more info"},
+    {name:"JN",       weeks:"Week 1",                                group:"KG",                           pay:"Paid",                           notes:""},
+    {name:"BY (Games)",weeks:"TBC",                                  group:"Lower School",                 pay:"Paid",                           notes:"Might be interested — to follow up"},
+    {name:"CL",       weeks:"Week 1",                                group:"KG",                           pay:"Voluntary",                      notes:"Happy to assist as extra help"},
+    {name:"JB",       weeks:"",                                      group:"Lower School — Circus Skills", pay:"",                               notes:""}
+  ];
+  var staffData;
+  try{ staffData = JSON.parse(localStorage.getItem("rws_staff_2026")); }catch(e){ staffData=null; }
+  if(!staffData || !staffData.length){ staffData = STAFF_DEFAULT.map(function(r){return r;}); }
+
+  function saveStaff(){ localStorage.setItem("rws_staff_2026", JSON.stringify(staffData)); }
+  function renderStaff(){
+    var b=document.getElementById("staffBody"), html="";
+    staffData.forEach(function(row,ri){
+      html+="<tr>";
+      STAFF_COLS.forEach(function(col){
+        html+='<td class="c-'+col+'"><div class="cell" contenteditable="true" data-row="'+ri+'" data-col="'+col+'" data-empty="1">'+escapeHtml(row[col]||"")+'</div></td>';
+      });
+      html+="</tr>";
+    });
+    b.innerHTML=html;
+  }
+  renderStaff();
+
+  document.addEventListener("input", function(e){
+    var c=e.target;
+    if(!c.classList || !c.classList.contains("cell")) return;
+    staffData[+c.dataset.row][c.dataset.col]=c.innerText.trim();
+    saveStaff();
+    savedEl.textContent="✓ Saved";
+    clearTimeout(t); t=setTimeout(function(){savedEl.textContent="";},1200);
+  });
+  function addStaff(){
+    staffData.push({name:"",weeks:"",group:"",pay:"",contact:"",notes:""});
+    saveStaff(); renderStaff();
+  }
+</script>
+</body>
+</html>
