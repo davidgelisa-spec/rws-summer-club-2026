@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ringwood Waldorf School — Summer Holiday Club 2026</title>
+<style>
+  @font-face{font-family:'Baar';src:url('assets/baar.woff2') format('woff2'),url('assets/baar.ttf') format('truetype');font-display:swap;}
+  :root{
+    --paper:#f7f1e6;       /* warm cream */
+    --paper2:#fbf7ef;
+    --ink:#43382c;         /* warm soft brown-black */
+    --ink-soft:#6b5d4d;
+    --coral:#ec7575;       /* signature accent */
+    --coral-soft:#fbe4e1;
+    --sage:#8a9a78;        /* earthy green */
+    --sage-soft:#e8ecdf;
+    --gold:#e0aa53;        /* warm gold */
+    --gold-soft:#f6e6c8;
+    --terra:#c97c5d;       /* terracotta */
+    --line:#e5dcc9;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Source Sans 3","Segoe UI",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:#ddd6c6;line-height:1.55;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  h1,h2,h3,.serif{font-family:'Baar',Georgia,'Times New Roman',serif;font-weight:400;}
+  .page{width:210mm;min-height:297mm;margin:14px auto;background:var(--paper);
+    box-shadow:0 6px 30px rgba(67,56,44,.25);overflow:hidden;position:relative;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;height:300px;overflow:hidden;}
+  .hero img.bg{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(67,56,44,.55) 0%,rgba(67,56,44,.14) 38%,rgba(236,117,117,.30) 100%);}
+  .hero .top{position:absolute;top:22px;left:30px;right:30px;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;}
+  .hero .logo{height:62px;width:auto;flex:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,.6));}
+  .hero .est{color:#fff;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.92;text-align:right;padding-top:6px;}
+  .hero .title{position:absolute;left:30px;bottom:26px;right:30px;z-index:2;color:#fff;}
+  .hero .title .kick{font-size:15px;letter-spacing:.04em;opacity:.95;margin-bottom:2px;}
+  .hero .title h1{font-size:50px;line-height:1.02;margin:0;text-shadow:0 2px 10px rgba(0,0,0,.35);}
+
+  /* ---------- BODY ---------- */
+  .body{padding:30px 36px 6px;position:relative;}
+  .lead{font-size:16px;line-height:1.6;color:var(--ink);margin:0 0 8px;}
+  .lead .serif{color:var(--terra);font-size:19px;}
+  h2{font-size:25px;color:var(--coral);margin:30px 0 14px;display:flex;align-items:center;gap:12px;}
+  h2 svg{flex:none;}
+  .sub{color:var(--ink-soft);font-size:13.5px;}
+
+  /* sprig divider colourings */
+  .leaf-sage{color:var(--sage);} .leaf-coral{color:var(--coral);} .leaf-gold{color:var(--gold);}
+
+  /* at a glance */
+  .glance{display:flex;gap:14px;}
+  .glance .card{flex:1;border-radius:18px;padding:16px 18px;text-align:center;border:1px solid var(--line);}
+  .glance .c1{background:var(--coral-soft);} .glance .c2{background:var(--sage-soft);} .glance .c3{background:var(--gold-soft);}
+  .glance .big{font-family:'Baar',serif;font-size:25px;color:var(--ink);line-height:1.05;}
+  .glance .small{font-size:12px;color:var(--ink-soft);margin-top:5px;}
+
+  /* weeks */
+  .weeks{display:flex;gap:14px;}
+  .week{flex:1;background:var(--paper2);border:1px solid var(--line);border-radius:18px;overflow:hidden;}
+  .week .top{padding:12px 16px 10px;text-align:center;color:#fff;font-family:'Baar',serif;font-size:18px;}
+  .week:nth-child(1) .top{background:var(--coral);}
+  .week:nth-child(2) .top{background:var(--sage);}
+  .week:nth-child(3) .top{background:var(--gold);}
+  .week .mid{padding:12px 16px;font-size:13px;text-align:center;}
+  .week .age{font-family:'Baar',serif;font-size:16px;color:var(--ink);display:block;margin-bottom:4px;}
+  .week .theme{color:var(--ink-soft);font-size:12px;}
+
+  /* prices table */
+  .ptable{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .ptable th{background:var(--sage);color:#fff;font-family:'Baar',serif;font-weight:400;font-size:14px;text-align:left;padding:11px 16px;}
+  .ptable td{padding:11px 16px;border-top:1px solid var(--line);}
+  .ptable tr:nth-child(even) td{background:var(--paper2);}
+  .ptable .price{font-weight:700;font-size:17px;color:var(--terra);white-space:nowrap;}
+  .tag{display:inline-block;background:var(--gold-soft);color:#8a6a23;font-size:10.5px;padding:2px 9px;border-radius:20px;margin-left:6px;}
+
+  /* two soft panels */
+  .panels{display:flex;gap:14px;margin-top:14px;}
+  .panel{flex:1;border-radius:18px;padding:14px 18px;border:1px solid var(--line);}
+  .panel.coral{background:var(--coral-soft);} .panel.sage{background:var(--sage-soft);}
+  .panel h3{font-size:18px;margin:0 0 8px;color:var(--ink);}
+  ul.sprig{list-style:none;padding:0;margin:0;font-size:13px;}
+  ul.sprig li{padding:5px 0 5px 22px;position:relative;}
+  ul.sprig li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:50% 0 50% 0;background:var(--coral);transform:rotate(45deg);}
+  .panel.sage ul.sprig li::before{background:var(--sage);}
+
+  /* activities — illustrated hand-drawn menu, no cards */
+  .menu{position:relative;margin-top:4px;}
+  .branch{display:block;width:260px;height:26px;margin:0 auto 16px;color:var(--sage);}
+  .menu-list{display:grid;grid-template-columns:1fr 1fr;column-gap:54px;row-gap:2px;max-width:700px;margin:0 auto;}
+  .mitem{display:flex;align-items:center;gap:15px;padding:9px 4px;}
+  .mitem svg.doodle{width:34px;height:34px;flex:none;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+  .mitem.m1{color:var(--coral);} .mitem.m2{color:var(--sage);} .mitem.m3{color:#c79235;} .mitem.m4{color:var(--terra);}
+  .mitem .nm{font-family:'Baar',serif;font-size:20px;line-height:1.12;color:var(--ink);}
+  .act-note{font-size:13.5px;color:var(--ink-soft);margin:16px 0 0;text-align:center;font-style:italic;}
+  .flourish{display:block;width:70px;height:30px;margin:8px auto 0;color:var(--coral);opacity:.85;}
+
+  /* why band */
+  .why{display:flex;gap:24px;}
+  .why>div{flex:1;}
+
+  /* footer */
+  footer{margin-top:24px;position:relative;color:#fff;}
+  footer .ph{height:150px;overflow:hidden;position:relative;}
+  footer .ph img{width:100%;height:100%;object-fit:cover;}
+  footer .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(67,56,44,.25),rgba(67,56,44,.78));}
+  footer .inner{background:var(--ink);padding:20px 36px 26px;}
+  footer h3{font-size:24px;color:#fff;margin:0 0 4px;}
+  footer .strap{color:var(--gold-soft);font-size:13px;margin-bottom:14px;}
+  footer .contact{display:flex;gap:28px;flex-wrap:wrap;font-size:13.5px;}
+  footer .contact b{color:var(--coral);font-family:'Baar',serif;font-weight:400;display:block;font-size:12px;}
+  footer .addr{font-size:12px;color:#cdbfae;margin-top:12px;}
+  .book{display:inline-block;margin-top:16px;background:var(--coral);color:#fff;font-family:'Baar',serif;
+    font-size:16px;padding:11px 26px;border-radius:30px;text-decoration:none;}
+
+  /* decorative corner sprig */
+  .corner{position:absolute;width:120px;height:120px;opacity:.5;pointer-events:none;}
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;}
+    @page{size:A4;margin:0;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <img class="bg" src="assets/photos/hero.jpg" alt="Children at Ringwood Waldorf School">
+    <div class="top">
+      <img class="logo" src="assets/rws-logo.svg" alt="Ringwood Waldorf School">
+      <div class="est">Independent education<br>3 – 18 years · est. 1974</div>
+    </div>
+    <div class="title">
+      <div class="kick serif">Ringwood Waldorf School</div>
+      <h1>Summer Holiday Club 2026</h1>
+    </div>
+  </div>
+
+  <!-- ============ BODY ============ -->
+  <div class="body">
+
+    <p class="lead"><span class="serif">A screen-free, nature-led summer on the edge of the New Forest.</span>
+    Three weeks of playing, making, exploring and having fun — run by Waldorf-trained staff in our woodland grounds.
+    Small groups, big adventures, and plenty of space to roam.</p>
+
+    <!-- AT A GLANCE -->
+    <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-4 3-6 6-10z"/></svg>At a glance</h2>
+    <div class="glance">
+      <div class="card c1"><div class="big">27 Jul – 14 Aug</div><div class="small">Monday–Friday · three weeks · 2026</div></div>
+      <div class="card c2"><div class="big">Ages 4–12</div><div class="small">Week 1 from age 4 · Weeks 2 &amp; 3 ages 6–12</div></div>
+      <div class="card c3"><div class="big">Just 25 a day</div><div class="small">Screen-free · staff ratios above statutory</div></div>
+    </div>
+
+    <!-- WEEKS -->
+    <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c-5-3-8-7-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 4-3 8-8 11z"/></svg>The three weeks</h2>
+    <div class="weeks">
+      <div class="week"><div class="top">Week 1</div><div class="mid"><span class="age">Ages 4–12</span><span class="theme">27–31 July · includes Kindergarten mornings for our youngest (4–6)</span></div></div>
+      <div class="week"><div class="top">Week 2</div><div class="mid"><span class="age">Ages 6–12</span><span class="theme">3–7 August · full programme of adventures, crafts &amp; performance</span></div></div>
+      <div class="week"><div class="top">Week 3</div><div class="mid"><span class="age">Ages 6–12</span><span class="theme">10–14 August · finishing the summer in style</span></div></div>
+    </div>
+
+    <!-- PRICES -->
+    <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M9 10c0-1.5 1.3-2.5 3-2.5s3 1 3 2.3c0 2.7-6 1.7-6 4.4 0 1.3 1.3 2.3 3 2.3s3-1 3-2.5"/><path d="M12 5.5v13"/></svg>Sessions &amp; prices</h2>
+    <table class="ptable">
+      <tr><th>Session</th><th>Ages</th><th>Hours</th><th>Per day</th></tr>
+      <tr><td class="serif" style="font-size:15px;">Kindergarten Morning</td><td>4–6</td><td>09:30 – 13:30</td><td class="price">£28</td></tr>
+      <tr><td class="serif" style="font-size:15px;">Core Day</td><td>6+</td><td>09:30 – 15:30</td><td class="price">£36</td></tr>
+      <tr><td class="serif" style="font-size:15px;">Long Day <span class="tag">early bird &amp; late leaver</span></td><td>All</td><td>08:00 – 17:45</td><td class="price">£46</td></tr>
+    </table>
+
+    <div class="panels">
+      <div class="panel coral">
+        <h3>Save with blocks</h3>
+        <ul class="sprig">
+          <li>Book <b>5 days</b> — save £20</li>
+          <li>Book <b>10 days</b> — save £50</li>
+          <li><b>10% sibling discount</b> (youngest child; not combinable with block discounts)</li>
+        </ul>
+      </div>
+      <div class="panel sage">
+        <h3>Our "No Junk" lunch</h3>
+        <ul class="sprig">
+          <li>Optional lunch — <b>£4/day</b> or <b>£20/week</b></li>
+          <li>Sandwiches, fruit, vegetables &amp; snacks</li>
+          <li>Vegetarian · vegan &amp; gluten-free options</li>
+          <li><b>Strict no-peanut policy</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ACTIVITIES -->
+    <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v16M4 12h16M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>What's on the menu</h2>
+    <div class="menu">
+      <!-- hand-drawn leafy branch divider -->
+      <svg class="branch" viewBox="0 0 260 26" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 13c40-2 80-2 122 0 42 2 82 2 122 0"/>
+        <path d="M70 13c-3-6-9-8-14-7 1 6 8 9 14 7zM110 13c3-6 9-8 14-7-1 6-8 9-14 7zM150 13c-3-6-9-8-14-7 1 6 8 9 14 7zM190 13c3-6 9-8 14-7-1 6-8 9-14 7z"/>
+        <circle cx="130" cy="13" r="3.2"/><path d="M130 6v-3M130 23v-3"/>
+      </svg>
+
+      <div class="menu-list">
+        <div class="mitem m1"><svg class="doodle" viewBox="0 0 26 26"><path d="M5 7c2-1.5 5-1.5 8 0 3-1.5 6-1.5 8 0v10c0 2-2 3-4 3-1.5 0-2.5-.6-4-1.6"/><path d="M13 7v13"/><path d="M9 20c-1.5 0-3-1-3-2.5"/></svg><div class="nm">Theatre &amp;<br>Performance</div></div>
+        <div class="mitem m2"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 3l1.6 4.2 4.4.2-3.5 2.7 1.3 4.3L13 12l-3.8 2.6 1.3-4.3L7 7.4l4.4-.2z"/><path d="M13 15v8M9 23h8"/></svg><div class="nm">Circus Skills</div></div>
+        <div class="mitem m3"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 4c-2.5 4-2.5 12 0 18M13 4c2.5 4 2.5 12 0 18M6 22h14M9.5 10C7 10 6 8.7 6 6.5M16.5 10c2.5 0 3.5-1.3 3.5-3.5"/></svg><div class="nm">Bushcraft &amp;<br>Survival</div></div>
+        <div class="mitem m4"><svg class="doodle" viewBox="0 0 26 26"><circle cx="18" cy="6.5" r="2.6"/><path d="M4 22c3.5-1 6-3.5 7.5-7M4 22l6.5-1.2M4 22l1.2-6.5M11.5 15l4 5"/></svg><div class="nm">Outdoor<br>Adventures</div></div>
+        <div class="mitem m1"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 4a9 9 0 1 0 0 18c1.3 0 1.8-1.1 1.1-2-.7-1.1.1-2.5 1.5-2.5H18a3.2 3.2 0 0 0 3.2-3.2C21.2 9.3 17.4 4 13 4z"/><circle cx="9" cy="12" r="1.1"/><circle cx="13" cy="9" r="1.1"/><circle cx="17" cy="12" r="1.1"/></svg><div class="nm">Arts &amp; Crafts</div></div>
+        <div class="mitem m2"><svg class="doodle" viewBox="0 0 26 26"><path d="M10 19V6l10-2.2V15"/><circle cx="7" cy="19" r="2.8"/><circle cx="17" cy="15" r="2.8"/></svg><div class="nm">Design &amp; Music</div></div>
+        <div class="mitem m3"><svg class="doodle" viewBox="0 0 26 26"><path d="M13 9c-1.2-3-5.5-3.4-7.2-.6C4.3 11 6.5 14.4 13 19.5c6.5-5.1 8.7-8.5 7.2-11.1C18.5 5.6 14.2 6 13 9z"/></svg><div class="nm">Games &amp; Food</div></div>
+        <div class="mitem m4"><svg class="doodle" viewBox="0 0 26 26"><circle cx="9" cy="8.5" r="2.8"/><circle cx="17" cy="8.5" r="2.8"/><path d="M4 21c0-3.3 2.2-5.5 5-5.5s5 2.2 5 5.5M12 21c0-3.3 2.2-5.5 5-5.5s5 2.2 5 5.5"/></svg><div class="nm">Social &amp; Play</div></div>
+      </div>
+
+      <p class="act-note">Plus quieter alternatives every day for children who prefer a gentler pace — there's room for everyone.</p>
+
+      <!-- small flower flourish -->
+      <svg class="flourish" viewBox="0 0 70 30" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="35" cy="12" r="3"/>
+        <path d="M35 9c-2-3 0-6 0-6s2 3 0 6zM38 12c3-2 6 0 6 0s-3 2-6 0zM32 12c-3-2-6 0-6 0s3 2 6 0zM35 15c-2 3 0 6 0 6s2-3 0-6z"/>
+        <path d="M35 18c-4 4-12 5-12 5M35 18c4 4 12 5 12 5"/>
+      </svg>
+    </div>
+    <p class="act-note">Plus quieter alternatives every day for children who prefer a gentler pace — there's room for everyone.</p>
+
+    <!-- WHY -->
+    <h2><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.3-7-9.3A3.7 3.7 0 0 1 12 8a3.7 3.7 0 0 1 7 2.7c0 5-7 9.3-7 9.3z"/></svg>Why families love it</h2>
+    <div class="why">
+      <div><ul class="sprig">
+        <li>Waldorf-trained staff &amp; approved experts</li>
+        <li>Completely screen-free</li>
+        <li>Small groups — just 25 children a day</li>
+      </ul></div>
+      <div><ul class="sprig">
+        <li>Direct woodland &amp; outdoor access</li>
+        <li>Staff ratios above statutory requirements</li>
+        <li>A nurturing environment that reflects our ethos</li>
+      </ul></div>
+    </div>
+
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="ph"><img src="assets/photos/woodland.jpg" alt="New Forest woodland"></div>
+    <div class="inner">
+      <h3>Book your child's place</h3>
+      <div class="strap serif">Nurturing bright young futures with confidence, creativity and compassion.</div>
+      <div class="contact">
+        <div><b>Online</b>ringwoodwaldorfschool.org.uk/holiday-clubs</div>
+        <div><b>Email</b>clubs@ringwoodwaldorfschool.org.uk</div>
+        <div><b>Telephone</b>01425 472664</div>
+      </div>
+      <div class="addr">Folly Farm Lane, Ashley, Ringwood, Hampshire, BH24 2NN &nbsp;·&nbsp; Places fill quickly — early booking advised.</div>
+      <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/">Book now →</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
