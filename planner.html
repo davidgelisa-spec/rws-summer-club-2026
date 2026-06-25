@@ -99,7 +99,7 @@
       <img class="logo" src="assets/rws-logo.svg" alt="Ringwood Waldorf School">
       <div>
         <h1>Summer Holiday Club 2026 — Activity &amp; Staff <span class="light">Planner</span></h1>
-        <p><b>Draft for review.</b> Activities and leads are still being confirmed — please have a look and let Lisa know what else you'd want to see here. Leads are shown by initials; full names &amp; contacts are held separately. (Any edits you make here stay on your own device.)</p>
+        <p><b>Draft for review.</b> Activities and leads are still being confirmed — please have a look and let Lisa know what else you'd want to see here. Leads are shown by initials; full names &amp; contacts are held separately. (Edits now save to one shared copy that everyone reviewing this page can see.)</p>
       </div>
     </div>
   </header>
@@ -169,21 +169,45 @@
   });
   document.getElementById("weeks").innerHTML=html;
 
-  var savedEl=document.getElementById("saved"), t;
-  document.addEventListener("input", function(e){
-    var f=e.target;
-    if(!f.classList || !f.classList.contains("field")) return;
-    var txt=f.innerText.trim();
-    if(txt){ store[f.dataset.key]=txt; f.classList.add("filled"); }
-    else { delete store[f.dataset.key]; f.classList.remove("filled"); }
-    localStorage.setItem("rws_planner_2026", JSON.stringify(store));
-    savedEl.textContent="✓ Saved";
-    clearTimeout(t); t=setTimeout(function(){savedEl.textContent="";},1200);
-  });
-  function clearAll(){
-    if(!confirm("Clear every activity entry in the day grid? (Staff list is not affected.) This cannot be undone.")) return;
-    store={}; localStorage.removeItem("rws_planner_2026");
-    document.querySelectorAll(".field").forEach(function(f){f.innerText="";f.classList.remove("filled");});
+  // ============ SHARED SAVING (Google Sheet bridge) ============
+  // Paste your Apps Script Web App /exec URL between the quotes to turn on shared saving.
+  // Leave it blank and the page just works locally on this one device.
+  var WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzvHDHekxKeZdF7MYhrYo0LhFjVX6F-62vZSZEOo8gqJJ4xHIW6ONjgCLpZXs4LoSvi/exec";
+
+  var savedEl=document.getElementById("saved"), statusT;
+  function setStatus(s,hold){ savedEl.textContent=s; if(hold){ clearTimeout(statusT); statusT=setTimeout(function(){savedEl.textContent="";},hold); } }
+
+  function sheetGet(cb){
+    if(!WEBAPP_URL) return;
+    fetch(WEBAPP_URL).then(function(r){return r.json();})
+      .then(function(d){ cb&&cb(d); })
+      .catch(function(){ setStatus("⚠ Offline — changes not shared"); });
+  }
+  function sheetPost(payload){
+    if(!WEBAPP_URL) return;
+    setStatus("Saving…");
+    fetch(WEBAPP_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
+      .then(function(){ setStatus("✓ Synced",1600); })
+      .catch(function(){ setStatus("⚠ Offline — changes not shared"); });
+  }
+
+  function applyGrid(grid){
+    if(!grid) return; store=grid;
+    document.querySelectorAll("#weeks .field").forEach(function(f){
+      if(f===document.activeElement) return;          // never overwrite what someone is typing
+      var v=grid[f.dataset.key]||"";
+      if(f.innerText!==v) f.innerText=v;
+      if(v) f.classList.add("filled"); else f.classList.remove("filled");
+    });
+    try{ localStorage.setItem("rws_planner_2026", JSON.stringify(store)); }catch(e){}
+  }
+  function applyStaff(staff){
+    if(!staff||!staff.length) return;
+    var ae=document.activeElement;
+    if(ae && ae.classList && ae.classList.contains("cell")) return;  // don't redraw mid-edit
+    staffData=staff;
+    try{ localStorage.setItem("rws_staff_2026", JSON.stringify(staffData)); }catch(e){}
+    renderStaff();
   }
 
   /* ---------- Staff & helpers roster ---------- */
@@ -220,18 +244,42 @@
   }
   renderStaff();
 
+  // ============ EDIT HANDLERS (write local + push to the shared Sheet) ============
+  var gridTimer, staffTimer;
   document.addEventListener("input", function(e){
-    var c=e.target;
-    if(!c.classList || !c.classList.contains("cell")) return;
-    staffData[+c.dataset.row][c.dataset.col]=c.innerText.trim();
-    saveStaff();
-    savedEl.textContent="✓ Saved";
-    clearTimeout(t); t=setTimeout(function(){savedEl.textContent="";},1200);
+    var el=e.target;
+    if(el.classList && el.classList.contains("field")){
+      var txt=el.innerText.trim();
+      if(txt){ store[el.dataset.key]=txt; el.classList.add("filled"); }
+      else { delete store[el.dataset.key]; el.classList.remove("filled"); }
+      try{ localStorage.setItem("rws_planner_2026", JSON.stringify(store)); }catch(e2){}
+      var key=el.dataset.key;
+      clearTimeout(gridTimer); gridTimer=setTimeout(function(){ sheetPost({type:"grid",key:key,value:store[key]||""}); }, 600);
+    } else if(el.classList && el.classList.contains("cell")){
+      staffData[+el.dataset.row][el.dataset.col]=el.innerText.trim();
+      saveStaff();
+      clearTimeout(staffTimer); staffTimer=setTimeout(function(){ sheetPost({type:"staff",rows:staffData}); }, 800);
+    }
   });
+  // flush immediately when leaving a field, so nothing is missed
+  document.addEventListener("focusout", function(e){
+    var el=e.target; if(!el.classList) return;
+    if(el.classList.contains("field")){ sheetPost({type:"grid",key:el.dataset.key,value:(store[el.dataset.key]||"")}); }
+    else if(el.classList.contains("cell")){ sheetPost({type:"staff",rows:staffData}); }
+  });
+
   function addStaff(){
-    staffData.push({name:"",weeks:"",group:"",pay:"",contact:"",notes:""});
-    saveStaff(); renderStaff();
+    staffData.push({name:"",weeks:"",group:"",pay:"",notes:""});
+    saveStaff(); renderStaff(); sheetPost({type:"staff",rows:staffData});
   }
+  function clearAll(){
+    if(!confirm("Clear the day grid on YOUR screen only? This does not change the shared copy.")) return;
+    document.querySelectorAll("#weeks .field").forEach(function(f){f.innerText="";f.classList.remove("filled");});
+  }
+
+  // ============ INITIAL LOAD + LIVE POLL (every 10s) ============
+  sheetGet(function(d){ applyGrid(d.grid); applyStaff(d.staff); });
+  if(WEBAPP_URL){ setInterval(function(){ sheetGet(function(d){ applyGrid(d.grid); applyStaff(d.staff); }); }, 10000); }
 </script>
 </body>
 </html>
