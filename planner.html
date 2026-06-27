@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Summer Club 2026 — Activity &amp; Staff Planner</title>
 <style>
   @font-face{font-family:'Baar';src:url('assets/baar.woff2') format('woff2'),url('assets/baar.ttf') format('truetype');font-display:swap;}
@@ -38,6 +41,16 @@
   .btn-print{background:var(--sage);color:#fff;}
   .btn-clear{background:var(--paper);color:var(--terra);border:1px solid #e0c3b4;}
   .saved{font-size:12.5px;color:var(--sage);font-weight:700;min-width:80px;font-family:'Baar',serif;}
+  /* live/local sync badge */
+  .badge-sync{display:inline-flex;align-items:center;gap:8px;font-family:'Baar',serif;font-size:13.5px;
+    padding:6px 15px;border-radius:24px;white-space:nowrap;}
+  .badge-sync::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor;flex:none;}
+  .badge-sync.is-live{background:var(--sage-soft);color:#3f7a4e;}
+  .badge-sync.is-live::before{animation:pulse 1.6s ease-in-out infinite;}
+  .badge-sync.is-local{background:var(--gold-soft);color:#9a6a1f;}
+  .badge-sync.is-offline{background:#f7dcd7;color:#b04a36;}
+  .badge-sync.is-connecting{background:var(--paper);color:var(--ink-soft);border:1px solid var(--line);}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
 
   /* weeks */
   .week{background:var(--paper);border:1px solid var(--line);border-top:none;}
@@ -105,6 +118,7 @@
   </header>
 
   <div class="toolbar">
+    <span class="badge-sync is-connecting" id="syncBadge">Connecting…</span>
     <div class="legend">
       <span><span class="swatch sw-tbc"></span>To be confirmed</span>
       <span><span class="swatch sw-ok"></span>Confirmed</span>
@@ -177,18 +191,30 @@
   var savedEl=document.getElementById("saved"), statusT;
   function setStatus(s,hold){ savedEl.textContent=s; if(hold){ clearTimeout(statusT); statusT=setTimeout(function(){savedEl.textContent="";},hold); } }
 
+  // live/local badge — lets anyone tell at a glance which version they're on
+  var badgeEl=document.getElementById("syncBadge");
+  function setBadge(state){
+    if(!badgeEl) return;
+    badgeEl.className="badge-sync is-"+state;
+    badgeEl.textContent = state==="live"    ? "● Live — saves for everyone"
+                        : state==="offline" ? "Offline — changes not shared"
+                        : state==="local"   ? "On this device only"
+                        :                      "Connecting…";
+  }
+  setBadge(WEBAPP_URL ? "connecting" : "local");
+
   function sheetGet(cb){
-    if(!WEBAPP_URL) return;
+    if(!WEBAPP_URL){ setBadge("local"); return; }
     fetch(WEBAPP_URL).then(function(r){return r.json();})
-      .then(function(d){ cb&&cb(d); })
-      .catch(function(){ setStatus("⚠ Offline — changes not shared"); });
+      .then(function(d){ setBadge("live"); cb&&cb(d); })
+      .catch(function(){ setBadge("offline"); setStatus("⚠ Offline — changes not shared"); });
   }
   function sheetPost(payload){
-    if(!WEBAPP_URL) return;
+    if(!WEBAPP_URL){ setBadge("local"); return; }
     setStatus("Saving…");
     fetch(WEBAPP_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
-      .then(function(){ setStatus("✓ Synced",1600); })
-      .catch(function(){ setStatus("⚠ Offline — changes not shared"); });
+      .then(function(){ setBadge("live"); setStatus("✓ Synced",1600); })
+      .catch(function(){ setBadge("offline"); setStatus("⚠ Offline — changes not shared"); });
   }
 
   function applyGrid(grid){
