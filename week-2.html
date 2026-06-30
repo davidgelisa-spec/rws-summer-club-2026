@@ -20,9 +20,11 @@
   .page{width:210mm;max-width:100%;margin:14px auto;background:var(--paper);
     box-shadow:0 6px 30px rgba(67,56,44,.25);overflow:hidden;}
   .hero{position:relative;overflow:hidden;}
-  .hero img{width:100%;height:300px;object-fit:cover;object-position:center;display:block;}
+  .hero img.bg{width:100%;height:300px;object-fit:cover;object-position:center;display:block;}
+  .hero .logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);height:50px;width:auto;z-index:2;
+    filter:drop-shadow(0 1px 4px rgba(255,255,255,.65));}
   .hero::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(60,74,48,.12) 0%,rgba(60,74,48,0) 32%,rgba(60,74,48,.08) 60%,rgba(60,74,48,.8) 100%);}
+    background:linear-gradient(180deg,rgba(40,52,40,0) 48%,rgba(40,52,40,.28) 78%,rgba(40,52,40,.62) 100%);}
   .hero .title{position:absolute;left:30px;right:30px;bottom:22px;z-index:2;color:#fff;text-align:center;}
   .hero .kick{font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.95;margin-bottom:4px;}
   .hero h1{font-size:44px;line-height:1.02;margin:0;text-shadow:0 2px 12px rgba(0,0,0,.45);}
@@ -70,7 +72,8 @@
 <div class="page">
 
   <div class="hero">
-    <img src="assets/photos/hero-aerial.jpg" alt="Ringwood Waldorf School on the edge of the New Forest">
+    <img class="bg" src="assets/photos/sky-bright.jpg" alt="Bright summer sky over the trees">
+    <img class="logo" src="assets/rws-logo-dark.svg" alt="Ringwood Waldorf School">
     <div class="title">
       <div class="kick serif">Summer Holiday Club 2026 · Ages 6–12</div>
       <h1>Week Two — 3–7 August</h1>
@@ -120,7 +123,7 @@
     <div class="inner">
       <p class="strap">Nurturing bright young futures with confidence, creativity and compassion.</p>
       <div class="links">
-        <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/">Book a place →</a>
+        <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/#holiday-form">Book a place →</a>
         <a class="alt" href="index.html">See the full overview</a>
       </div>
       <div class="addr">Ringwood Waldorf School · Folly Farm Lane, Ashley, Ringwood, Hampshire, BH24 2NN · 01425 472664</div>

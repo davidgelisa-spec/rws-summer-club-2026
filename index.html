@@ -37,8 +37,10 @@
   /* ---------- HERO (aerial of the school in the New Forest) ---------- */
   .hero{position:relative;overflow:hidden;}
   .hero img.bg{width:100%;height:330px;object-fit:cover;object-position:center;display:block;}
+  .hero .logo{position:absolute;top:22px;left:50%;transform:translateX(-50%);height:54px;width:auto;z-index:2;
+    filter:drop-shadow(0 1px 4px rgba(255,255,255,.65));}
   .hero::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,rgba(60,74,48,.10) 0%,rgba(60,74,48,0) 30%,rgba(60,74,48,.05) 62%,rgba(60,74,48,.78) 100%);}
+    background:linear-gradient(180deg,rgba(40,52,40,0) 48%,rgba(40,52,40,.28) 78%,rgba(40,52,40,.62) 100%);}
   .hero .title{position:absolute;left:30px;right:30px;bottom:20px;z-index:2;color:#fff;text-align:center;}
   .hero .title .kick{font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.92;margin-bottom:3px;}
   .hero .title h1{font-size:42px;line-height:1.02;margin:0;text-shadow:0 2px 12px rgba(0,0,0,.45);}
@@ -140,7 +142,8 @@
 
   <!-- ============ HERO ============ -->
   <div class="hero">
-    <img class="bg" src="assets/photos/hero-aerial.jpg" alt="Aerial view of Ringwood Waldorf School in the New Forest">
+    <img class="bg" src="assets/photos/sky-bright.jpg" alt="Bright summer sky over the trees">
+    <img class="logo" src="assets/rws-logo-dark.svg" alt="Ringwood Waldorf School">
     <div class="title">
       <div class="kick">Holiday Club · Ages 4–12</div>
       <h1>Summer Holiday Club 2026</h1>
@@ -250,7 +253,7 @@
       <div class="strap serif">Nurturing bright young futures with confidence, creativity and compassion.</div>
       <div class="contact">ringwoodwaldorfschool.org.uk/holiday-clubs &nbsp;·&nbsp; clubs@ringwoodwaldorfschool.org.uk &nbsp;·&nbsp; 01425&nbsp;472664</div>
       <div class="addr">Folly Farm Lane, Ashley, Ringwood, Hampshire, BH24 2NN &nbsp;·&nbsp; Places fill quickly — early booking advised.</div>
-      <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/">Book now →</a>
+      <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/#holiday-form">Book now →</a>
     </div>
   </footer>
 
