@@ -50,18 +50,18 @@
   .dbody h3{font-size:24px;margin:0 0 4px;color:var(--ink);}
   .dbody p{margin:0;font-size:14.5px;color:#4f4334;}
   .dbody b{color:var(--terra);font-weight:600;}
-  footer{margin-top:26px;position:relative;color:#fff;}
-  footer .ph{height:120px;overflow:hidden;position:relative;}
-  footer .ph img{width:100%;height:100%;object-fit:cover;}
-  footer .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(60,74,48,.3),rgba(60,74,48,.82));}
-  footer .inner{background:#3c4a30;padding:22px 38px 26px;text-align:center;}
-  footer .strap{font-family:'Baar',serif;font-size:20px;color:var(--gold-soft);margin:0 0 12px;}
+  footer{margin-top:26px;position:relative;color:#fff;text-align:center;}
+  footer .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  footer::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(60,74,48,.20) 0%,rgba(60,74,48,.5) 55%,rgba(60,74,48,.74) 100%);}
+  footer .inner{position:relative;z-index:2;padding:30px 38px 34px;}
+  footer .strap{font-family:'Baar',serif;font-size:21px;color:#fff;margin:0 0 16px;text-shadow:0 2px 10px rgba(0,0,0,.35);}
   footer .links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:13.5px;}
   footer a.book{display:inline-block;background:var(--coral);color:#fff;font-family:'Baar',serif;font-size:16px;
-    padding:11px 26px;border-radius:30px;text-decoration:none;}
-  footer a.alt{display:inline-block;color:#fff;border:1px solid rgba(255,255,255,.5);font-family:'Baar',serif;
+    padding:11px 26px;border-radius:30px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,.25);}
+  footer a.alt{display:inline-block;color:#fff;border:1px solid rgba(255,255,255,.6);font-family:'Baar',serif;
     font-size:15px;padding:10px 22px;border-radius:30px;text-decoration:none;}
-  footer .addr{font-size:12px;color:#cfe0c4;margin-top:14px;}
+  footer .addr{font-size:12px;color:#e7ddcb;margin-top:16px;}
   @media print{ body{background:#fff;} .page{margin:0;box-shadow:none;} @page{size:A4;margin:0;} }
   @media (max-width:560px){ .body{padding:22px 20px 6px;} .day{gap:14px;} .daymark{width:64px;} }
 </style>
@@ -116,7 +116,7 @@
   </div>
 
   <footer>
-    <div class="ph"><img src="assets/photos/woodland.jpg" alt="The New Forest, on our doorstep"></div>
+    <img class="bg" src="assets/photos/woodland.jpg" alt="The New Forest, on our doorstep">
     <div class="inner">
       <p class="strap">Nurturing bright young futures with confidence, creativity and compassion.</p>
       <div class="links">

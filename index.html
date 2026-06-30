@@ -106,25 +106,24 @@
   .why{display:flex;gap:24px;}
   .why>div{flex:1;}
 
-  /* outdoors photo band — shown IN FULL, never cropped */
-  .outdoors{margin-top:24px;position:relative;line-height:0;}
-  .outdoors img{width:100%;height:auto;display:block;}
-  .outdoors .cap{position:absolute;left:24px;bottom:18px;z-index:2;line-height:1.1;
-    font-family:'Baar',serif;font-size:26px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5);}
+  /* week nav pills */
+  .weeknav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 24px;}
+  .weeknav a{font-family:'Baar',serif;font-size:14px;text-decoration:none;color:var(--ink-soft);
+    padding:6px 15px;border-radius:22px;border:1px solid var(--line);background:var(--paper2);}
+  .weeknav a.active{background:var(--coral);color:#fff;border-color:var(--coral);}
 
-  /* footer */
-  footer{margin-top:0;position:relative;color:#fff;}
-  footer .ph{height:150px;overflow:hidden;position:relative;}
-  footer .ph img{width:100%;height:100%;object-fit:cover;}
-  footer .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(67,56,44,.25),rgba(67,56,44,.78));}
-  footer .inner{background:#3c4a30;padding:20px 36px 26px;}
-  footer h3{font-size:24px;color:#fff;margin:0 0 4px;}
-  footer .strap{color:var(--gold-soft);font-size:13px;margin-bottom:14px;}
-  footer .contact{display:flex;gap:28px;flex-wrap:wrap;font-size:13.5px;}
-  footer .contact b{color:var(--coral);font-family:'Baar',serif;font-weight:400;display:block;font-size:12px;}
-  footer .addr{font-size:12px;color:#cdbfae;margin-top:12px;}
-  .book{display:inline-block;margin-top:16px;background:var(--coral);color:#fff;font-family:'Baar',serif;
-    font-size:16px;padding:11px 26px;border-radius:30px;text-decoration:none;}
+  /* footer — one photo with a gentle wash, text over it */
+  footer{position:relative;color:#fff;text-align:center;}
+  footer .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  footer::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(60,74,48,.18) 0%,rgba(60,74,48,.5) 55%,rgba(60,74,48,.74) 100%);}
+  footer .inner{position:relative;z-index:2;padding:34px 38px 36px;}
+  footer h3{font-size:27px;color:#fff;margin:0 0 6px;text-shadow:0 2px 10px rgba(0,0,0,.35);}
+  footer .strap{font-family:'Baar',serif;font-size:16px;color:#f3ece0;margin:0 0 16px;}
+  footer .contact{font-size:13.5px;color:#fff;line-height:1.7;}
+  footer .addr{font-size:12px;color:#e7ddcb;margin-top:10px;}
+  .book{display:inline-block;margin-top:18px;background:var(--coral);color:#fff;font-family:'Baar',serif;
+    font-size:16px;padding:11px 28px;border-radius:30px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,.25);}
 
   /* decorative corner sprig */
   .corner{position:absolute;width:120px;height:120px;opacity:.5;pointer-events:none;}
@@ -150,6 +149,13 @@
 
   <!-- ============ BODY ============ -->
   <div class="body">
+
+    <nav class="weeknav">
+      <a href="index.html" class="active">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+    </nav>
 
     <p class="lead"><span class="serif">A screen-free, nature-led summer on the edge of the New Forest.</span>
     Three weeks of playing, making, exploring and having fun — run by Waldorf-trained staff, out in the fresh air and surrounded by nature.
@@ -237,22 +243,13 @@
 
   </div>
 
-  <!-- ============ OUTDOORS PHOTO (shown in full) ============ -->
-  <div class="outdoors">
-    <img src="assets/photos/lo-Screenshot-2025-01-13-at-10.09.30.jpg" alt="Children outdoors at Ringwood Waldorf School">
-    <div class="cap">Out in the fresh air, every day</div>
-  </div>
-
-  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER (one photo, gentle text) ============ -->
   <footer>
+    <img class="bg" src="assets/photos/lo-Screenshot-2025-01-13-at-10.09.30.jpg" alt="Children outdoors at Ringwood Waldorf School">
     <div class="inner">
       <h3>Book your child's place</h3>
       <div class="strap serif">Nurturing bright young futures with confidence, creativity and compassion.</div>
-      <div class="contact">
-        <div><b>Online</b>ringwoodwaldorfschool.org.uk/holiday-clubs</div>
-        <div><b>Email</b>clubs@ringwoodwaldorfschool.org.uk</div>
-        <div><b>Telephone</b>01425 472664</div>
-      </div>
+      <div class="contact">ringwoodwaldorfschool.org.uk/holiday-clubs &nbsp;·&nbsp; clubs@ringwoodwaldorfschool.org.uk &nbsp;·&nbsp; 01425&nbsp;472664</div>
       <div class="addr">Folly Farm Lane, Ashley, Ringwood, Hampshire, BH24 2NN &nbsp;·&nbsp; Places fill quickly — early booking advised.</div>
       <a class="book" href="https://ringwoodwaldorfschool.org.uk/holiday-clubs/">Book now →</a>
     </div>
